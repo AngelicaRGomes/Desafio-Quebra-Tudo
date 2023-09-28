@@ -1,10 +1,27 @@
 programa {
 	inclua biblioteca Util --> u
 	inclua biblioteca Texto --> t
-	logico finalizarPrograma = falso
-	cadeia ListaCachorros[1][4] = { {"Bob", "M", "Marrom", "Médio", "Curto", "Sociável", "Michael", "(11) 99999-9999"}, {"Bella", "Fêmea", "Branco", "Médio", "Curto", "Sociável", "Bruno", "email@email.com"}, {"Max", "Macho", "Preto", "Grande", "Médio", "Independente", "Lizandra Silva", "email@teste.com.br"}, {"Max", "Macho", "Preto", "Grande", "Curto", "Sociável", "Ana", "(11) 11111-1111"}, {"Luna", "Fêmea", "Marrom", "Médio", "Médio", "Passivo-agressivo", "Carlos", "carlos@email.com"}, {"Charlie", "Macho", "Caramelo", "Pequeno", "Longo", "Independente", "Isabela", "(22) 22222-2222"}, {"Lola", "Fêmea", "Marrom", "Médio", "Curto", "Timido", "Sophia", "sophia@email.com"}}, ListaGatos[][7] = { {"Simba", "Macho", "Dourado", "Curto", "Sociável", "Carla", "carla@email.com"}, {"Nala", "Fêmea", "Marrom", "Curto", "Sociável", "Ricardo", "(77) 77777-7777"}, {"Whiskers", "Macho", "Cinza", "Médio", "Timido", "Amanda", "amanda@email.com"}}
+	logico finalizarPrograma = verdadeiro
+	cadeia ListaCachorros[7][8] = { 
+								{"Bob", "Macho", "Marrom", "Médio", "Curto", "Sociável", "Michael", "(11) 99999-9999"},
+								{"Bella", "Fêmea", "Branco", "Médio", "Curto", "Sociável", "Bruno", "email@email.com"}, 
+								{"Max", "Macho", "Preto", "Grande", "Médio", "Independente", "Lizandra Silva", "email@teste.com.br"},
+								{"Max", "Macho", "Preto", "Grande", "Curto", "Sociável", "Ana", "(11) 11111-1111"},
+								{"Luna", "Fêmea", "Marrom", "Médio", "Médio", "Passivo-agressivo", "Carlos", "carlos@email.com"},
+								{"Charlie", "Macho", "Caramelo", "Pequeno", "Longo", "Independente", "Isabela", "(22) 22222-2222"},
+								{"Lola", "Fêmea", "Marrom", "Médio", "Curto", "Timido", "Sophia", "sophia@email.com"}
+							}
+		  
+	cadeia ListaGatos[3][7] =     { 
+			  					{"Simba", "Macho", "Dourado", "Curto", "Sociável", "Carla", "carla@email.com"},
+								{"Nala", "Fêmea", "Marrom", "Curto", "Sociável", "Ricardo", "(77) 77777-7777"},
+								{"Whiskers", "Macho", "Cinza", "Médio", "Timido", "Amanda", "amanda@email.com"}
+							}
 	
-	funcao OpcaoErrada() {escreva("Ops... Digite apenas as opções que estão no menu.\n\n")}
+	funcao OpcaoErrada() {
+		escreva("Ops... Digite apenas as opções que estão no menu.\n\n")
+		}
+
 
 	funcao SairDoPrograma() {
 		escreva("PetMatch agradece pelo seu tempo.\nAté logo!! Volte sempre!")
@@ -12,7 +29,7 @@ programa {
 	}
 	
 	funcao inicio() {
-		enquanto (nao (nao ( nao ( nao (finalizarPrograma))))) {
+		enquanto (finalizarPrograma) {
 			inteiro opcaoInicial
 			escreva("P E T  M A T C H\nEncontre Seu Companheiro Peludo\n\nNo que podemos te ajudar?\n[1] <--> Adotar um companheiro\n[2] <--> Sair\n--> ")
 			leia(opcaoInicial)
@@ -32,24 +49,24 @@ programa {
 
 	funcao AdotarPet() {
 		logico finalizarAdocao = verdadeiro
-		enquanto (nao finalizarAdocao) {
+		enquanto (finalizarAdocao) {
 			inteiro opcaoEscolherAnimal
 			escreva("ADOTE UM AMIGO\n\n[1] <--> Adotar Cachorro(a)\n[2] <--> Adotar Gato(a)\n[3] <--> Voltar\n--> ")
 			leia(opcaoEscolherAnimal)
 			limpa()
 			escolha (opcaoEscolherAnimal) {
 				caso 1:
-					AdotarCachorro()
+					AdotarAnimal("Cachorro")
 					SairDoPrograma()
-					finalizarAdocao = verdadeiro
+					finalizarAdocao = falso
 				pare
 				caso 2:
-					AdotarGato()
+					AdotarAnimal("Gato")
 					SairDoPrograma()
-					finalizarAdocao = verdadeiro
+					finalizarAdocao = falso
 				pare
 				caso 3:
-					finalizarAdocao = verdadeiro
+					finalizarAdocao = falso
 				pare
 				caso contrario:
 					OpcaoErrada()
@@ -57,35 +74,23 @@ programa {
 		}
 	}
 
-	funcao AdotarCachorro() {
-		inteiro opcaoPesquisarCachorro
-		escreva("Procurar cachorro:\n[1] <--> Adicionar Filtro\n[2] <--> Ver Todos\n[3] <--> Voltar\n--> ")
-		leia(opcaoPesquisarCachorro)
+  funcao AdotarAnimal(cadeia animal) {
+		inteiro opcaoPesquisa
+		escreva("Procurar ", animal, ":\n[1] <--> Adicionar Filtro\n[2] <--> Ver Todos\n[3] <--> Voltar\n--> ")
+		leia(opcaoPesquisa)
 		limpa()
-		escolha (opcaoPesquisarCachorro) {
+		escolha (opcaoPesquisa) {
 			caso 1:
-				FiltrarPets(ListaCachorros, "Cachorro")
+        se (animal == "Cachorro")
+				  FiltrarPets(ListaCachorros, animal)
+        senao
+          FiltrarPets(ListaGatos, animal)
 			pare
 			caso 2:
-				FichaAnimal(ListaCachorros, "Cachorro", 0, "")
-			pare
-			caso 3:
-				finalizarPrograma = verdadeiro
-			pare
-		}
-	}
-
-	funcao AdotarGato() {
-		inteiro opcaoPesquisarGato
-		escreva("Procurar felino:\n[1] <--> Adicionar Filtro\n[2] <--> Ver Todos\n[3] <--> Voltar\n--> ")
-		leia(opcaoPesquisarGato)
-		limpa()
-		escolha (opcaoPesquisarGato) {
-			caso 1:
-				FiltrarPets(ListaGatos, "Gato")
-			pare
-			caso 2:
-				FichaAnimal(ListaGatos, "Gato", 0, "")
+        se (animal == "Cachorro")
+				  FichaAnimal(ListaCachorros, animal, 0, "")
+        senao
+          FichaAnimal(ListaGatos, animal, 0, "")
 			pare
 			caso 3:
 				finalizarPrograma = verdadeiro
@@ -106,9 +111,9 @@ programa {
 				escreva("\nFiltrar pelo sexo:\n[F] <--> Fêmea\n[M] <--> Macho\n--> ")
 				leia(opcaoSexagem)
 				limpa()
-				se (txt.caixa_alta(opcaoSexagem) == "F") {
+				se (t.caixa_alta(opcaoSexagem) == "F") {
 					opcaoSexagem = "Fêmea"
-				} senao se (txt.caixa_alta(opcaoSexagem) == "M") {
+				} senao se (t.caixa_alta(opcaoSexagem) == "M") {
 					opcaoSexagem = "Macho"
 				}
 				FichaAnimal(pets, animal, numeroColuna, opcaoSexagem)
@@ -116,7 +121,7 @@ programa {
 			
 			caso 2:
 				inteiro opcaoCor
-				cadeia corSelecionada =  "Preto"
+				cadeia corSelecionada =  ""
 				numeroColuna = 2
 				escreva("\nFiltrar pela cor dominante:\n[1] <--> Preto\n[2] <--> Marrom\n[3] <--> Caramelo\n[4] <--> Dourado\n[5] <--> Branco\n[6] <--> Tigrado\n[7] <--> Cinza\n[8] <--> Ruivo\n--> ")
 				leia(opcaoCor)
@@ -154,7 +159,7 @@ programa {
 	
 			caso 3:
 				inteiro opcaoPelagem
-				cadeia pelagemSelecionada = "Curto"
+				cadeia pelagemSelecionada = ""
 				se (animal == "Gato") {
 					numeroColuna = 3
 				} senao {
@@ -181,11 +186,11 @@ programa {
 			
 			caso 4:
 				inteiro opcaoTemperamento
-				cadeia temperamentoSelecionado = "Agressivo"
+				cadeia temperamentoSelecionado =""
 				se (animal == "Gato") {
-					numeroColuna = 5
-				} senao {
 					numeroColuna = 4
+				} senao {
+					numeroColuna = 5
 				}
 				escreva("\nFiltrar pelo temperamento:\n[1] <--> Agressivo\n[2] <--> Timido\n[3] <--> Passivo-agressivo\n[4] <--> Sociável\n[5] <--> Independente\n--> ")
 				leia(opcaoTemperamento)
@@ -218,7 +223,7 @@ programa {
 					pare
 				}
 				inteiro opcaoPorte
-				cadeia porteSelecionado =  "Pequeno"
+				cadeia porteSelecionado = ""
 				numeroColuna = 3
 				escreva("\nFiltrar pelo porte:\n[1] <--> Pequeno\n[2] <--> Médio\n[3] <--> Grande\n--> ")
 				leia(opcaoPorte)
@@ -245,42 +250,46 @@ programa {
 		
 	}
 
-	funcao FichaAnimal(cadeia pet[][], cadeia animal, inteiro colunaAlvo, caracter comparador) {
-		para (inteiro linha = 0; linha < ut.numero_linhas(pet); linha++) {
-			se (animal == "Gatinhos") {
-				se ((pet[linha][colunaAlvo] == comparador) e (comparador == "")) {
+	funcao FichaAnimal(cadeia pet[][], cadeia animal, inteiro colunaAlvo, cadeia comparador) {
+    inteiro indices[7], contIndices=0
+		para (inteiro linha = 0; linha < u.numero_linhas(pet); linha++) {
+			se (animal == "Cachorro") {
+				se ((pet[linha][colunaAlvo] == comparador) ou (comparador == "")) {
+          indices[contIndices] = linha
+          contIndices++
 					escreva("Opção: ",linha + 1,"\nNome: ", pet[linha][0], "\nSexo: ", pet[linha][1], "\nCor: ", pet[linha][2], "\nTamanho: ", pet[linha][3], "\nPelagem: ", pet[linha][4], "\nTemperamento: ", pet[linha][5], "\nDoador: ", pet[linha][6], "\nContato: ", pet[linha][7], "\n---------------------------------------------------\n\n")
 				}
-			} senao se (animal == "Cachorros") {
-				se ((pet[linha][colunaAlvo] == comparador) e (comparador == "")) {
+			} senao se (animal == "Gato") {
+				se ((pet[linha][colunaAlvo] == comparador) ou (comparador == "")) {
+          indices[contIndices] = linha
+          contIndices++
 					escreva("Opção: ",linha + 1,"\nNome: ", pet[linha][0], "\nSexo: ", pet[linha][1], "\nCor: ", pet[linha][2], "\nPelagem: ", pet[linha][3], "\nTemperamento: ", pet[linha][4], "\nDoador: ", pet[linha][5], "\nContato: ", pet[linha][6], "\n---------------------------------------------------\n\n")
 				}
 			}
 		}
 		inteiro selecionarPet
 		caracter adotar
-		escreva("\nDeseja adotar (s/n)?: ")
-	    	leia(adotar)
-	    	limpa()
-	    	se (adotar == 'sim') {
-	      	escreva("Digite o número da opção que indica o pet\n--> ")
-	      	leia(selecionarPet)
-	      	limpa()
-	      	escreva("\nVocê confirmou a adoção!\n\n")
-	    	} senao {
-	    		finalizarPrograma = falso
-	    	}
+    escreva("Digite o número da opção que indica o pet\n--> ")
+    leia(selecionarPet)
+    logico achou = falso
+    para(inteiro i=0; i<7; i++){
+      se ((selecionarPet-1) == indices[i]) {
+        achou = verdadeiro
+        pare
+      }
+    }
+    se(achou){
+      escreva("\nDeseja adotar (s/n)?: ")
+      leia(adotar)
+      limpa()
+      se (adotar == 's'){
+        escreva("\nVocê confirmou a adoção!\n\n")
+      }
+      finalizarPrograma = falso
+    }
+    senao {
+      escreva("\nAnimal não encontrado!\n\n")
+      finalizarPrograma = falso
+    }
 	}
 }
-
-/* $$$ Portugol Studio $$$ 
- * 
- * Esta seção do arquivo guarda informações do Portugol Studio.
- * Você pode apagá-la se estiver utilizando outro editor.
- * 
- * @POSICAO-CURSOR = 1162; 
- * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
- * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
- * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
- */
