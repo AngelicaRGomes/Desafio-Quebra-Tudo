@@ -10,13 +10,13 @@ programa {
 								{"Luna", "Fêmea", "Marrom", "Médio", "Médio", "Passivo-agressivo", "Carlos", "carlos@email.com"},
 								{"Charlie", "Macho", "Caramelo", "Pequeno", "Longo", "Independente", "Isabela", "(22) 22222-2222"},
 								{"Lola", "Fêmea", "Marrom", "Médio", "Curto", "Timido", "Sophia", "sophia@email.com"}
-							}
+	}
 		  
-	cadeia ListaGatos[3][7] =     { 
-			  					{"Simba", "Macho", "Dourado", "Curto", "Sociável", "Carla", "carla@email.com"},
+	cadeia ListaGatos[3][7] = { 
+			  				{"Simba", "Macho", "Dourado", "Curto", "Sociável", "Carla", "carla@email.com"},
 								{"Nala", "Fêmea", "Marrom", "Curto", "Sociável", "Ricardo", "(77) 77777-7777"},
 								{"Whiskers", "Macho", "Cinza", "Médio", "Timido", "Amanda", "amanda@email.com"}
-							}
+	}
 	
 	funcao OpcaoErrada() {
 		escreva("Ops... Digite apenas as opções que estão no menu.\n\n")
@@ -247,7 +247,6 @@ programa {
 			caso contrario:
 				escreva("\nOpção solicitada é inválida. Insira uma nova opção:\n")
 		}
-		
 	}
 
 	funcao FichaAnimal(cadeia pet[][], cadeia animal, inteiro colunaAlvo, cadeia comparador) {
@@ -269,16 +268,19 @@ programa {
 		}
 		inteiro selecionarPet
 		caracter adotar
-    escreva("Digite o número da opção que indica o pet\n--> ")
-    leia(selecionarPet)
-    logico achou = falso
-    para(inteiro i=0; i<7; i++){
-      se ((selecionarPet-1) == indices[i]) {
-        achou = verdadeiro
-        pare
-      }
-    }
-    se(achou){
+		logico achou = falso
+    se(contIndices>0){
+			escreva("Digite o número da opção que indica o pet\n--> ")
+    	leia(selecionarPet)
+    		para(inteiro i=0; i<7; i++){
+				se ((selecionarPet-1) == indices[i]) {
+					achou = verdadeiro
+					pare
+				}
+    	}
+		}
+
+    se(achou == verdadeiro){
       escreva("\nDeseja adotar (s/n)?: ")
       leia(adotar)
       limpa()
@@ -287,6 +289,7 @@ programa {
       }
       finalizarPrograma = falso
     }
+
     senao {
       escreva("\nAnimal não encontrado!\n\n")
       finalizarPrograma = falso
